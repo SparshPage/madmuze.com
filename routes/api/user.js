@@ -9,7 +9,7 @@ const {check, validationResult} = require('express-validator');
 const gravatar = require('gravatar');
 
 
-router.post('/' ,auth,[check('name', 'Name is required').not().isEmpty(),
+router.post('/' ,[check('name', 'Name is required').not().isEmpty(),
 check('email', 'Please enter a valid email').isEmail(),
 check('password', 'minimim 8 charechters required').isLength({min: 8})    
 ],

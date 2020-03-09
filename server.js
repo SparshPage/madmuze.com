@@ -12,7 +12,7 @@ app.get('/', (req,res)=>{
 app.use(express.json({extended: false}))
 app.use('/api/users', require('./routes/api/user'));
 app.use('/api/auth',require('./routes/api/auth'));
-app.use('/api/products', require('./routes/api/products'))
+app.use('/api/products', require('./routes/api/products'));
 
 
 
