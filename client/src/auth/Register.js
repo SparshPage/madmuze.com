@@ -1,29 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
+import { register } from "../actions/auth";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-export const Register = () => {
+export const Register = ({ register }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
+
+  const { name, email, password } = formData;
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = e => {
+    e.preventDefault();
+    register({ name, email, password });
+  };
+
   return (
     <div>
       <div className="field">
-        <div className="container">
-          <form className="white">
-            <h5 className="grey-text darken-3">
-              Sign Up <i className="  material-icons">person</i>
+        <div className="container  center-align">
+          <form className="white" onSubmit={e => onSubmit(e)}>
+            <h5 className="grey-text darken-3 center-align">
+              <i className=" medium material-icons">person_add</i>
+              <br />
+              Sign Up
             </h5>
             <div className="input-field">
               <label htmlFor="email">Email</label>
-              <input type="email" id="email"></input>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={e => onChange(e)}
+              ></input>
             </div>
             <div className="input-field">
               <label htmlFor="name">Name</label>
-              <input type="text" id="name"></input>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={name}
+                onChange={e => onChange(e)}
+              ></input>
             </div>
 
             <div className="input-field">
               <label htmlFor="password">password</label>
-              <input type="password" id="password"></input>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                name="password"
+                onChange={e => onChange(e)}
+              ></input>
             </div>
             <div className="input-field">
-              <button className="btn pink lighten-1 z-depth-0">Login</button>
+              <button className="btn blue darken-2 z-depth-0 align-center">
+                Register
+              </button>
             </div>
           </form>
         </div>
@@ -31,3 +71,7 @@ export const Register = () => {
     </div>
   );
 };
+Register.propTypes = {
+  register: PropTypes.func.isRequired
+};
+export default connect(null, { register })(Register);
