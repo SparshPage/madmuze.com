@@ -1,5 +1,11 @@
 import axios from "axios";
-import { REGISTER_SUCCESS, AUTH_ERR, USER_LOADED } from "./types";
+import {
+  REGISTER_SUCCESS,
+  AUTH_ERR,
+  USER_LOADED,
+  LOGIN_SUCCESS,
+  LOGOUT
+} from "./types";
 import setAuthToken from "../utils/setAuthToken";
 
 //load user
@@ -48,4 +54,38 @@ export const register = ({ name, email, password }) => async dispatch => {
   } catch (err) {
     alert(err);
   }
+};
+
+//login user
+export const login = (email, password) => async dispatch => {
+  const config = {
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify({ email, password });
+
+  try {
+    const res = await axios.post(
+      "http://localhost:1000/api/auth",
+      body,
+      config
+    );
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data
+    });
+    console.log(res.data);
+
+    dispatch(loadUser());
+  } catch (err) {
+    alert(err);
+  }
+};
+
+export const logout = () => dispatch => {
+  dispatch({
+    type: LOGOUT
+  });
 };

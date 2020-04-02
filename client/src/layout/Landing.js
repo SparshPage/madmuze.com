@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import SlideView from "./SlideView";
+import Categories from "./Categories";
 
 export class Landing extends Component {
   render() {
     return (
       <div>
-        <h1>This is landing Page</h1>
+        <SlideView></SlideView>
+        <Categories></Categories>
       </div>
     );
   }
