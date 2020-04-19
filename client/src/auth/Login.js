@@ -7,14 +7,14 @@ import { Redirect } from "react-router-dom";
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const { email, password } = formData;
-  const onchange = e =>
+  const onchange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onsubmit = async e => {
+  const onsubmit = async (e) => {
     e.preventDefault();
     login(email, password);
   };
@@ -23,7 +23,7 @@ const Login = ({ login, isAuthenticated }) => {
   }
 
   return (
-    <div className="field" onSubmit={e => onsubmit(e)}>
+    <div className="field" onSubmit={(e) => onsubmit(e)}>
       <div className="container center-align">
         <form className="white" style={{ fontSize: "30px" }}>
           <h5 className="grey-text darken-3 center-align">
@@ -38,7 +38,7 @@ const Login = ({ login, isAuthenticated }) => {
               id="email"
               value={email}
               name="email"
-              onChange={e => onchange(e)}
+              onChange={(e) => onchange(e)}
             ></input>
           </div>
           <div className="input-field">
@@ -48,7 +48,7 @@ const Login = ({ login, isAuthenticated }) => {
               id="password"
               value={password}
               name="password"
-              onChange={e => onchange(e)}
+              onChange={(e) => onchange(e)}
             ></input>
           </div>
           <div className="input-field">
@@ -61,11 +61,11 @@ const Login = ({ login, isAuthenticated }) => {
 };
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { login })(Login);

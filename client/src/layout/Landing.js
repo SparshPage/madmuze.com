@@ -1,16 +1,29 @@
 import React, { Component } from "react";
 import SlideView from "./SlideView";
 import Categories from "./Categories";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
-export class Landing extends Component {
-  render() {
-    return (
-      <div>
-        <SlideView></SlideView>
-        <Categories></Categories>
-      </div>
-    );
+const Landing = ({ isAuthenticated }) => {
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard"></Redirect>;
   }
-}
 
-export default Landing;
+  return (
+    <div>
+      <SlideView></SlideView>
+      <Categories></Categories>
+    </div>
+  );
+};
+
+Landing.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(Landing);

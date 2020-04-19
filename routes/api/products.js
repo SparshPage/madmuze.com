@@ -6,7 +6,20 @@ var Product = require("../../model/Product");
 var config = require("config");
 var jwt = require("jsonwebtoken");
 const Cart = require("../../model/Cart");
+const Category = require("../../model/Categories");
 const { check, validationResult } = require("express-validator");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 router.get("/", async (req, res) => {
   let product = await Product.find();
@@ -21,32 +34,61 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", auth, async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    res.json({ errors: errors.array() });
+router.get("/product_by_id", async (req, res) => {
+  let type = req.query.type;
+  let productIds = req.query.id;
+
+  if (type === "array") {
+    let ids = req.query.id.split(",");
+    productIds = [];
+    productIds = ids.map((item) => {
+      return item;
+    });
   }
-  var { name, image, type, price } = req.body;
 
   try {
-    var product = await Product.findOne({ name: name });
-    if (product) {
-      return res.status(400).json({ msg: "product already added" });
-    }
-    product = new Product({
-      name,
-      type,
-      image,
-      price
-    });
+    let product = await Product.find({ _id: { $in: productIds } }).populate(
+      "_id"
+    );
 
-    await product.save();
-    res.json({ product: product });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ msg: "server crashed" });
+    return res.status(200).json(product);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ success: false, msg: error });
   }
 });
+
+// router.post("/", upload.single("image"), async (req, res) => {
+//   const errors = validationResult(req);
+//   if (!errors.isEmpty()) {
+//     res.json({ errors: errors.array() });
+//   }
+//   var { name, type, price, category } = req.body;
+//   var image = req.file.path;
+
+//   try {
+//     var product = await Product.findOne({ name: name });
+//     if (product) {
+//       return res.status(400).json({ msg: "product already added" });
+//     }
+//     product = new Product({
+//       name,
+//       type,
+//       price,
+//       image,
+//     });
+//     category = new Category({
+//       category,
+//     });
+
+//     await product.save();
+//     await category.save();
+//     res.json({ product: product, category: category });
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(500).json({ msg: "server crashed" });
+//   }
+// });
 
 router.post("/:product_id", auth, async (req, res) => {
   try {
@@ -58,7 +100,7 @@ router.post("/:product_id", auth, async (req, res) => {
         user: user.id,
         Items: [],
         totalQty: 0,
-        total: 0
+        total: 0,
       });
     }
 

@@ -17,7 +17,7 @@ export class SlideView extends Component {
             <li data-target="#myCarousel" data-slide-to="2"></li>
           </ol>
 
-          <div className="carousel-inner" style={{ marginTop: "100px" }}>
+          <div className="carousel-inner">
             <div className="item active">
               <img src={img1} alt="Los Angeles" />
             </div>

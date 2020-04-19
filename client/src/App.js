@@ -9,6 +9,13 @@ import { loadUser } from "./actions/auth";
 //redux
 import store from "./store";
 import { Provider } from "react-redux";
+import Strings from "./layout/Strings";
+import AdmLogin from "./AdminViews/AdmLogin";
+import Dashboard from "./layout/Dashboard";
+import UploadProduct from "./AdminViews/UploadProduct";
+import PrivateRoute from "./Routing/PrivateRoute";
+import DetailProduct from "./layout/ProductDetailPage/DetailProduct";
+import CartPage from "./layout/CartPage/CartPage";
 
 function App() {
   useEffect(() => {
@@ -24,6 +31,11 @@ function App() {
             <Switch>
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
+              <Route path="/string" component={Strings} />
+              <PrivateRoute path="/dashboard" component={Dashboard} />
+              <PrivateRoute path="/upload" component={UploadProduct} />
+              <Route path="/product/:productId" component={DetailProduct} />
+              <PrivateRoute path="/user/cart" component={CartPage} />
             </Switch>
           </section>
         </Fragment>
