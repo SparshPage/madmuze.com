@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import img1 from "../images/offer1.jpg";
-import img2 from "../images/images.jpeg";
+import img2 from "../images/electric.jpg";
 
 export class SlideView extends Component {
   render() {

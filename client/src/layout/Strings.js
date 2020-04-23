@@ -66,7 +66,7 @@ const Strings = () => {
           <span className="sr-only">Next</span>
         </a>
       </div>
-      <DisplayProds></DisplayProds>
+      <DisplayProds filter="String"></DisplayProds>
     </div>
   );
 };

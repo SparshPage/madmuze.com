@@ -1,12 +1,14 @@
-import React, { useEffect, Render } from "react";
+import React, { useEffect, useState } from "react";
 import { loadUser } from "../actions/auth";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import UploadProduct from "../AdminViews/UploadProduct";
 import { Redirect } from "react-router-dom";
 import DisplayProds from "./DisplayProds";
 
+import { getProducts } from "../actions/products";
+
 const Dashboard = ({ loadUser, auth: { user, isAuthenticated } }) => {
+  const [Val, setVal] = useState();
   useEffect(() => {
     loadUser();
   }, []);
@@ -20,12 +22,18 @@ const Dashboard = ({ loadUser, auth: { user, isAuthenticated } }) => {
     return <Redirect to="/" />;
   }
 
+  const handleFilters = (filters) => {
+    console.log(filters);
+    setVal(filters);
+  };
+  console.log(Val);
+
   return (
     <div>
-      <div>
-        <h2>Welcome {user && user.name}</h2>
-      </div>
-      <DisplayProds isAuthenticated={isAuthenticated}></DisplayProds>
+      <DisplayProds
+        isAuthenticated={isAuthenticated}
+        filter={Val}
+      ></DisplayProds>
     </div>
   );
 };
@@ -37,4 +45,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { loadUser })(Dashboard);
+export default connect(mapStateToProps, { loadUser, getProducts })(Dashboard);

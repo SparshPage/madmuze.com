@@ -4,6 +4,7 @@ import Categories from "./Categories";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import DisplayProds from "./DisplayProds";
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -13,7 +14,7 @@ const Landing = ({ isAuthenticated }) => {
   return (
     <div>
       <SlideView></SlideView>
-      <Categories></Categories>
+      <DisplayProds></DisplayProds>
     </div>
   );
 };

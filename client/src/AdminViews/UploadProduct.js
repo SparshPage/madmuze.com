@@ -101,7 +101,7 @@ const UploadProduct = (props) => {
             className="browser-default"
           >
             {categories.map((item) => (
-              <option key={item.key} value={item.value}>
+              <option key={item.key} value={item.key}>
                 {item.value}
               </option>
             ))}

@@ -84,7 +84,7 @@ const CartPage = (props) => {
             })
           );
         } else {
-          alert("youre fucked");
+          alert(response.data.err);
         }
       }
     );

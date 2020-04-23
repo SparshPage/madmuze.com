@@ -178,17 +178,17 @@ router.post("/successBuy", auth, (req, res) => {
         //3. Decrease the stock of products
         let products = [];
         doc.product.forEach((item) => {
-          products.push({ id: item._id, quantity: item.quantity });
+          products.push({ id: item.id, quantity: item.quantity });
         });
 
         async.eachSeries(
           products,
           (item, callback) => {
             Product.update(
-              { _id: item._id },
+              { _id: item.id },
               {
                 $inc: {
-                  quant: -item.quant,
+                  quant: -item.quantity,
                 },
               },
               { new: false },

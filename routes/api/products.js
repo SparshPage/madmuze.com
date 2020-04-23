@@ -21,8 +21,21 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get("/", async (req, res) => {
-  let product = await Product.find();
+router.post("/", async (req, res) => {
+  let findArgs = {};
+  console.log(req.body);
+  for (let key in req.body) {
+    if (req.body[key].length > 0) {
+      if (key === "price") {
+      } else {
+        findArgs[key] = req.body[key];
+        console.log(req.body[key]);
+        console.log(findArgs);
+      }
+    }
+  }
+
+  let product = await Product.find(findArgs);
   try {
     if (!product) {
       res.status(404).json({ msg: "Not Found" });
